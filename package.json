@@ -1,0 +1,38 @@
+{
+  "name": "syna",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev:ui": "vite --config apps/desktop/vite.config.ts --host 127.0.0.1",
+    "dev": "node scripts/dev.mjs",
+    "check": "tsc --noEmit && eslint . && node scripts/check-boundaries.mjs && tsx --test tests/layout.test.ts tests/document-session.test.ts",
+    "build": "npm run check && vite build --config apps/desktop/vite.config.ts && node scripts/build-electron.mjs",
+    "start": "electron apps/desktop",
+    "test:e2e": "playwright test",
+    "test:electron": "node scripts/verify-electron.mjs",
+    "test:contracts": "tsx --test tests/notes.contract.test.ts tests/library.contract.test.ts",
+    "test:p2:electron": "node --import tsx scripts/verify-p2.mjs",
+    "test:editor:electron": "node --import tsx scripts/verify-p2.mjs --editor",
+    "test:library:electron": "node --import tsx scripts/verify-library.mjs",
+    "test:layout:electron": "node --import tsx scripts/verify-p2.mjs --layout"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "@playwright/test": "1.64.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "electron": "44.7.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.0.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "globals": "^17.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.0.0",
+    "vite": "8.3.4"
+  }
+}

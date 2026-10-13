@@ -1,0 +1,17 @@
+import { readFile, writeFile } from 'node:fs/promises';
+const root = '.artifacts/p2-layout';
+const browser = JSON.parse(await readFile(`${root}/browser-results.json`, 'utf8'));
+const production = JSON.parse(await readFile(`${root}/electron-production-results.json`, 'utf8'));
+const development = JSON.parse(await readFile(`${root}/electron-development-results.json`, 'utf8'));
+const groups = [
+  ['1440 · Centered', ['live', 'reading', 'source'].map(mode => [`1440-centered-${mode}`, mode])],
+  ['1440 · Full Width', ['live', 'reading', 'source'].map(mode => [`1440-full-width-${mode}`, mode])],
+  ['1920 · 百分比扩展', [['1920-centered-live', 'Centered · 80%'], ['1920-full-width-live', 'Full Width · 100%'], ['1920-centered-live-assistant', 'Assistant 展开']]],
+  ['1024 · 窄工作面', [['1024-centered-live', 'Centered · 侧栏收起'], ['1024-centered-live-assistant', 'Centered · 有效 100%'], ['1024-full-width-source', 'Full Width · Source']]],
+  ['1280 · 面板组合', [['1280-centered-live', 'Sidebar 展开'], ['1280-centered-live-assistant', 'Assistant 展开'], ['1280-full-width-reading', 'Full Width · Reading']]],
+  ['几何与现场', [['block-geometry', '实际文字中心与块手柄'], ['electron-focus', 'Electron · Focus'], ['electron-sidebar-collapsed', 'Electron · Sidebar 收起']]]
+];
+await writeFile(`${root}/index.html`, `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Syna P2.4 · Document Layout</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5f0;color:#293227;font:14px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}main{max-width:1600px;margin:auto;padding:40px 32px}h1{font-size:28px;font-weight:600;margin:0 0 8px}h2{font-size:17px;font-weight:500;margin:32px 0 12px}header{border-bottom:1px solid #dce1d7;padding-bottom:24px}p{color:#65725f}nav{display:flex;flex-wrap:wrap;gap:20px}a{color:#496442;text-underline-offset:3px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}figure{margin:0;background:#fff;border:1px solid #dce1d7;border-radius:6px;overflow:hidden}img{display:block;width:100%;aspect-ratio:1.6;object-fit:contain;background:#ecefe9}figcaption{padding:10px 14px;display:flex;justify-content:space-between;font-size:12px}@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.grid{grid-template-columns:1fr}main{padding:24px 16px}}
+</style><main><header><h1>Syna P2.4 · Document Layout</h1><p>Centered 80% / Full Width 100% · 按实际工作面计算 · 三模式共用正文基准</p><p>Browser ${browser.stats.expected} 项通过，${browser.stats.unexpected} 项失败 · Electron 生产 ${production.checks.length} 组${production.passed ? '通过' : '失败'} · 开发 ${development.checks.length} 组${development.passed ? '通过' : '失败'}</p><nav><a href="report.md">修改与验证说明</a><a href="browser-results.json">Browser 原始结果</a><a href="electron-production-results.json">Electron 生产</a><a href="electron-development-results.json">Electron 开发</a><a href="electron-production-geometry.json">Electron 几何</a><a href="block-geometry.json">块几何</a><a href="build.log">构建</a></nav></header>${groups.map(([label, items]) => `<section><h2>${label}</h2><div class="grid">${items.map(([name, title]) => `<figure><a href="${name}.png"><img loading="lazy" src="${name}.png" alt="${title}"></a><figcaption>${title}<a href="${name}.png">原图 ↗</a></figcaption></figure>`).join('')}</div></section>`).join('')}<p>窄窗口继续沿用 Shell 的临时 Sidebar/Assistant overlay 规则，不改写用户的文档宽度偏好。未接入新业务。</p></main></html>`);
+console.log(`${root}/index.html`);

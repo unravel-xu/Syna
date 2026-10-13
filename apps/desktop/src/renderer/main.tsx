@@ -1,0 +1,13 @@
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { composeShell } from './app/composition';
+import { AppProvider } from './app/AppProvider';
+import { LibraryInteractions } from './features/library/LibraryInteractions';
+import { AppShell } from './app/AppShell';
+import './styles/tokens.css';
+import './styles/shell.css';
+import './styles/pages.css';
+import './styles/editor.css';
+import './styles/library.css';
+const runtime = composeShell();
+createRoot(document.getElementById('root')!).render(<React.StrictMode><AppProvider {...runtime}>{runtime.libraryExplorer ? <LibraryInteractions><AppShell /></LibraryInteractions> : <AppShell />}</AppProvider></React.StrictMode>);

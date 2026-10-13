@@ -1,0 +1,17 @@
+import { ArrowRight, ArrowUpRight, ChevronRight, FileText, Layers3, Circle, Link2, Plus } from 'lucide-react';
+import { useShell } from '../app/AppProvider';
+import { notes, pipelines, projects, stages } from '../fixtures/demo';
+import { DemoBadge, FixtureIcon } from '../shell/primitives';
+import type { Location } from '@syna/contracts';
+export function Workspaces({ location }: { location: Extract<Location, { page: 'workspaces' }> }) {
+  const { application, notesWorkspace } = useShell();
+  const project = projects.find(p => p.id === location.projectId);
+  const pipeline = pipelines.find(p => p.id === location.pipelineId);
+  if (!project) return <div className="page-container workspace-overview"><div className="eyebrow">A QUESTION BECOMES A PROJECT</div><div className="page-title-row"><h1>{pipeline?.name ?? 'Workspaces'}</h1><DemoBadge>Demo</DemoBadge></div><p className="page-description">Keep the sources, notes, and next steps of your work together.</p><div className="workspace-projects">{(pipeline ? pipeline.projects : projects).map(p => <button key={p.id} className="workspace-project" onClick={() => application.navigate({ page: 'workspaces', projectId: p.id })}><span className="project-monogram">{p.initials}</span><strong>{p.name}</strong><p>{p.description}</p><span className="text-link">Open demo project <ArrowUpRight size={14} /></span></button>)}</div>{pipeline && pipeline.projects.length === 0 && <div className="empty-state"><Layers3 size={30} /><h2>A place for your next project.</h2><p>This pipeline has no demo projects. Project creation is not connected.</p></div>}</div>;
+  return <div className="project-page page-container"><div className="project-kicker"><FixtureIcon name="research" size={14} />Research<ChevronRight size={12} />Project<DemoBadge /></div><div className="project-title"><span className="project-monogram">{project.initials}</span><div><h1>{project.name}</h1><p>{project.description}</p></div></div>
+    <div className="project-tabs"><span aria-current="page">Overview</span><span className="subtle-label">Pipeline & project layout preview</span></div>
+    <section className="project-section"><div className="section-heading"><h2>Follow the thread</h2><span className="subtle-label">DEMO PIPELINE</span></div><p className="section-description">A little structure for open-ended work.</p><div className="pipeline-stages">{stages.map((stage, i) => <div key={stage} className={i === 0 ? 'current' : ''}><span className="stage-number">0{i + 1}</span><strong>{stage}</strong><p>{['Gather questions & sources', 'Find patterns & relationships', 'Turn understanding into output'][i]}</p>{i === 0 && <span className="stage-label"><Circle size={9} />Sample current stage</span>}{i < 2 && <ArrowRight className="stage-arrow" size={16} />}</div>)}</div></section>
+    <section className="project-section"><div className="section-heading"><h2>Connected notes</h2><span className="subtle-label"><Link2 size={12} />Fixture links only</span></div><div className="linked-notes">{[notes[0], notes[2]].map(note => <button key={note.id} className="continue-row" onClick={() => application.navigate({ page: 'library', section: 'notes', ...(notesWorkspace ? {} : { noteId: note.id }) })}><FileText size={18} /><span><strong>{note.title}</strong><small>Demo note · Opens in Library</small></span><ArrowUpRight size={15} /></button>)}</div></section>
+    <div className="project-empty-actions"><Plus size={15} /><span>Tasks, source linking, and project changes will be connected in a later phase.</span></div>
+  </div>;
+}

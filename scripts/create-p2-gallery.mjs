@@ -1,0 +1,6 @@
+import { readdir, writeFile } from 'node:fs/promises';
+const root = '.artifacts/p2';
+const files = (await readdir(root)).filter(file => file.endsWith('.png')).sort();
+const cards = files.map(file => `<a href="${file}" target="_blank"><img src="${file}" alt="${file}"><span>${file}</span></a>`).join('');
+await writeFile(`${root}/index.html`, `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Syna P2 · Markdown 验收</title><style>*{box-sizing:border-box}body{margin:0;padding:32px;background:#1c1f1d;color:#dee3dc;font:13px -apple-system,sans-serif}h1{font-size:26px;font-weight:500}p{color:#a1aaa0;line-height:1.8}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:24px}a{color:inherit;text-decoration:none;border:1px solid #ffffff18;border-radius:6px;overflow:hidden}img{display:block;width:100%}span{display:block;padding:12px;color:#a1aaa0}@media(max-width:600px){.grid{grid-template-columns:1fr}}</style><h1>Syna P2 · Markdown 编辑器</h1><p>真实 Electron + 隔离 SQLite 工作区<br>Markdown 编辑 / 侧栏折叠 / Focus / 保存失败 / Revision 冲突<br>开发与构建模式截图；点击查看原尺寸。原始验收结果见同目录 JSON。</p><div class="grid">${cards}</div></html>`);
+console.log(`P2 gallery: ${files.length} screenshots`);

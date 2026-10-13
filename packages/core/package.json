@@ -1,0 +1,1 @@
+{"name":"@syna/core","version":"0.1.0","private":true,"type":"module","exports":"./src/index.ts","dependencies":{"@lezer/markdown":"^1.8.0","@syna/contracts":"*"}}

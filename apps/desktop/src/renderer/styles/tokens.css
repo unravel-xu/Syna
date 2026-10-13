@@ -1,0 +1,34 @@
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SFMono-Regular', Consolas, monospace;
+  --text-xs: 11px; --text-sm: 12px; --text-base: 13px; --text-md: 14px; --text-lg: 16px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
+  --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px; --space-16: 64px;
+  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 10px; --radius-xl: 14px;
+  --rail-width: 56px; --header-height: 48px;
+  --sidebar-heading-height: 44px; --sidebar-row-height: 32px;
+  --border-width: 1px; --icon-stroke: 1.65;
+  --motion-fast: 120ms; --motion-normal: 180ms; --ease: cubic-bezier(.2,.8,.2,1);
+}
+:root, :root[data-theme='dark'] {
+  --bg-rail: #121514; --bg-header: #171a18; --bg-sidebar: #191c1a; --bg-main: #1c1f1d;
+  --bg-raised: #222623; --bg-input: #1a1d1b; --bg-hover: #ffffff07; --bg-active: #b6ceb111;
+  --bg-accent: #b1c6aa; --text-on-accent: #20291f;
+  --text-primary: #dee3dc; --text-secondary: #a1aaa0; --text-muted: #818c81; --text-faint: #737d73;
+  --accent: #b1c6aa; --accent-strong: #ccddc6; --border: #ffffff0c; --border-strong: #ffffff17;
+  --backdrop: #080b0980; --focus-ring: #b1c6aa; --selection: #b1c6aa26;
+  --shadow-dialog: 0 16px 64px #00000038; --shadow-overlay: -8px 0 32px #00000018;
+  --shadow-popover: 0 5px 18px #00000024;
+  --text-error: #d7a89a; --editor-code: #c6cda9;
+}
+:root[data-theme='light'] {
+  --bg-rail: #ecefe9; --bg-header: #f4f5f0; --bg-sidebar: #f0f2ec; --bg-main: #f9faf6;
+  --bg-raised: #ffffff; --bg-input: #f0f2ec; --bg-hover: #24372506; --bg-active: #47654210;
+  --bg-accent: #496442; --text-on-accent: #ffffff;
+  --text-primary: #293227; --text-secondary: #596653; --text-muted: #65725f; --text-faint: #6c7766;
+  --accent: #496442; --accent-strong: #344e2d; --border: #293a2510; --border-strong: #293a2523;
+  --backdrop: #26352340; --focus-ring: #496442; --selection: #49644220;
+  --shadow-dialog: 0 16px 64px #23331c16; --shadow-overlay: -8px 0 32px #23331c0b;
+  --shadow-popover: 0 5px 18px #23331c18;
+  --text-error: #9b4632; --editor-code: #68733c;
+}
